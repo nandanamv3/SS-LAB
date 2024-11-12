@@ -21,20 +21,17 @@ NEXT:
     INC DI           
     JMP NEXT         
 TERMINATE:
-    MOV BYTE PTR [DI], '$'
-    DEC DI           
-    LEA SI, STR1     
-REVERSE:
-    CMP SI, DI       
-    JAE PRINT        
-    MOV AL, [SI]     
-    MOV BL, [DI]     
-    MOV [DI], AL     
-    MOV [SI], BL     
-    INC SI          
-    DEC DI          
-    JMP REVERSE    
-PRINT:
+    MOV AL,"$"
+    MOV [DI],AL
+    DEC DI
+DOTHIS:
+    MOV AL,[SI]
+    XCHG AL,[DI]
+    XCHG AL.[SI]
+    INC SI
+    DEC DI
+    CMP SI,DI
+    JL DOTHIS
     LEA DX, MSG2
     MOV AH, 09H
     INT 21H
